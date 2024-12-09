@@ -1,0 +1,7 @@
+{
+  "spark.executor.memory":"8g",
+  "spark.network.timeout": "10000",
+  "spark.storage.level": "MEMORY_ONLY",
+  "spark.eventLog.enabled": "True",
+  "spark.eventLog.compress": "True"
+}

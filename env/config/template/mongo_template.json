@@ -1,0 +1,5 @@
+{
+  "spark.read": "spark.mongodb.output.uri",
+  "spark.write": "spark.mongodb.input.uri",
+  "spark.jars": "spark.jars.packages"
+}

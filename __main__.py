@@ -1,6 +1,8 @@
 # This is a sample Python script.
-from src.jobs.spark_file import RunningSpark
+from src.config.enviroment_conf import env_check
 import sys
+from src.jobs.etl_jobs import execute_job
+
 
 # Press Mayús+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -13,8 +15,7 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print("PARAMRETROS ", sys.argv[1:])
-    running_job = RunningSpark()
-    running_job.execute_job()
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    champ = sys.argv[1]
+    match_date = sys.argv[2]
+    env_check()
+    execute_job(championship=champ, match_date=match_date)
