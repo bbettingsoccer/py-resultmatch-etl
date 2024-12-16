@@ -1,7 +1,7 @@
 {
   "spark.type": "MongoDB",
-  "spark.read": ["BFF_OperationData", "BFF_Scrapy"],
-  "spark.write": ["BFF_OperationData"],
+  "spark.read": ["BFF_SoccerOperation", "BFF_Scrapy"],
+  "spark.write": ["BFF_SoccerOperation"],
   "spark.jars": "org.mongodb.spark:mongo-spark-connector_2.12:3.0.1",
   "acronym.db": {"OP":"BFF_OperationData","SCR":"BFF_Scrapy"}
 }
