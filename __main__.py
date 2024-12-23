@@ -16,6 +16,9 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     champ = sys.argv[1]
+    print("<<<<- ARGUMENTO [1] ->>>>> ", champ)
     match_date = sys.argv[2]
+    print("<<<<- ARGUMENTO [2] ->>>>> ", match_date)
+
     env_check()
     execute_job(championship=champ, match_date=match_date)
