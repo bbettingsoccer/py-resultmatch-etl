@@ -21,6 +21,7 @@ def env_check():
 
     if os.environ['ENVIRONMENT_TYPE'] == 'DEV':
         path_file = get_path_file(folder1="env", folder2=None, file="dev.env")
+        print("ENV path_file ", path_file)
         env_file = find_dotenv(path_file)
         load_dotenv(env_file)
 
