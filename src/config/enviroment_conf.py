@@ -1,27 +1,41 @@
 import os
-from dotenv import load_dotenv, dotenv_values, find_dotenv
+from dotenv import load_dotenv, find_dotenv
 import json
 
 from src.config.match_constants import MatchConstants
 from src.dto.info_connection_db_dto import InfoConnectionDatabaseDTO
+from pathlib import Path
+
+
+def get_path_file(folder1: str, folder2: str, file: str) -> Path:
+    root_dir = Path(__file__).parent.parent
+    if folder2 is None:
+        path_complete = os.path.join(root_dir, folder1, file)
+    else:
+        path_complete = os.path.join(root_dir, folder1, folder2, file)
+    return path_complete
 
 
 def env_check():
     env_file = None
 
     if os.environ['ENVIRONMENT_TYPE'] == 'DEV':
-        env_file = find_dotenv("./env/dev.env")
+        path_file = get_path_file(folder1="env", folder2=None, file="dev.env")
+        env_file = find_dotenv(path_file)
         load_dotenv(env_file)
 
     elif os.environ['ENVIRONMENT_TYPE'] == 'PRO':
-        env_file = find_dotenv("./env/pro.env")
+        path_file = get_path_file(folder1="env", folder2=None, file="pro.env")
+        env_file = find_dotenv(path_file)
         load_dotenv(env_file)
     load_dotenv(env_file)
 
 
 def set_spark_config_environment() -> dict:
     data_dict = None
-    with open('./env/config/spark_config_env.json', 'r') as f:
+    path_file = get_path_file(folder1="env", folder2="config", file="spark_config_env.json")
+
+    with open(path_file, 'r') as f:
         json_string = f.read()
         if len(json_string) > 0:
             data_dict = json.loads(json_string)
@@ -33,7 +47,9 @@ def set_spark_config_database() -> dict:
     template_data = None
     item_read = None
     item_write = None
-    with open('././env/config/spark_config_db.json', 'r') as f:
+    path_file = get_path_file(folder1="env", folder2="config", file="spark_config_db.json")
+
+    with open(path_file, 'r') as f:
         json_string = f.read()
         if len(json_string) > 0:
             data = json.loads(json_string)
@@ -41,7 +57,8 @@ def set_spark_config_database() -> dict:
             # TEMPLATE DATABASE
             match connection_type:
                 case MatchConstants.DB_MONGODB:
-                    with open('././env/config/template/mongo_template.json', 'r') as f:
+                    path_file = get_path_file(folder1="env", folder2="config", file="mongo_template.json")
+                    with open(path_file, 'r') as f:
                         json_template = f.read()
                         template_data = json.loads(json_template)
                 case MatchConstants.DB_ORACLE:
@@ -50,9 +67,9 @@ def set_spark_config_database() -> dict:
                 if key == MatchConstants.SPARK_READ_DB:
                     for v in val:
                         if item_read is None:
-                            item_read = os.getenv('DB_URL')+v
+                            item_read = os.getenv('DB_URL') + v
                         else:
-                            item_read = item_read + "," + os.getenv('DB_URL')+v
+                            item_read = item_read + "," + os.getenv('DB_URL') + v
                     data_dict_comp[template_data[MatchConstants.SPARK_READ_DB]] = item_read
                 elif key == MatchConstants.SPARK_WRITE_DB:
                     for v in val:
@@ -71,7 +88,8 @@ def get_database_conf(db_name: str, type_operation: str, entity_name: str) -> In
     connection_v = []
     db_con_v = []
     connection_db_dto = None
-    with open('././env/config/spark_config_db.json', 'r') as f:
+    path_file = get_path_file(folder1="env", folder2="config", file="spark_config_db.json")
+    with open(path_file, 'r') as f:
         json_string = f.read()
         data = json.loads(json_string)
         for key, val in data.items():
