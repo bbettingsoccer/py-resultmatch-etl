@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 def get_path_file(folder1: str, folder2: str, file: str) -> Path:
-    root_dir = Path(__file__).parent.parent
+    root_dir = Path(__file__).parent.parent.parent
     if folder2 is None:
         path_complete = os.path.join(root_dir, folder1, file)
     else:
