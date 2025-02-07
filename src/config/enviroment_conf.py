@@ -8,7 +8,8 @@ from pathlib import Path
 
 
 def get_path_file(folder1: str, folder2: str, file: str) -> Path:
-    root_dir = Path(__file__).parent.parent.parent
+    #root_dir = Path(__file__).parent.parent.parent
+    root_dir = os.getcwd()
     if folder2 is None:
         path_complete = os.path.join(root_dir, folder1, file)
     else:
@@ -18,15 +19,18 @@ def get_path_file(folder1: str, folder2: str, file: str) -> Path:
 
 def env_check():
     env_file = None
+    environment = os.environ.get("ENVIRONMENT_TYPE")
+    print("ENV_TYPE", environment)
 
-    if os.environ['ENVIRONMENT_TYPE'] == 'DEV':
+    if environment == "DEV":
         path_file = get_path_file(folder1="env", folder2=None, file="dev.env")
-        print("ENV path_file ", path_file)
+        print("PATH.ENV DEV", path_file)
         env_file = find_dotenv(path_file)
         load_dotenv(env_file)
 
-    elif os.environ['ENVIRONMENT_TYPE'] == 'PRO':
+    elif environment == 'PRO':
         path_file = get_path_file(folder1="env", folder2=None, file="pro.env")
+        print("PATH.ENV DEV", path_file)
         env_file = find_dotenv(path_file)
         load_dotenv(env_file)
     load_dotenv(env_file)
